@@ -4,7 +4,7 @@ def add(a: float, b: float) -> float:
     """
     Add two numbers :param a: number 1
     :type a: float
-    :param b: number 2
+    :param b: number 2my
     :type b: float
     :return: sum of a and b
     :rtype: float
