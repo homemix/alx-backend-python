@@ -2,8 +2,7 @@
 
 def add(a: float, b: float) -> float:
     """
-    Add two numbers
-    :param a: number 1
+    Add two numbers :param a: number 1
     :type a: float
     :param b: number 2
     :type b: float
