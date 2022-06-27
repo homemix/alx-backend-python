@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+:return a random number between 0 and max_delay
+"""
 import asyncio
 from typing import List
 
