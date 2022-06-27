@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+:return the time it takes to wait for n tasks to complete
+"""
 import asyncio
 import time
 
