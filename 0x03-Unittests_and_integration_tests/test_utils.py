@@ -64,6 +64,7 @@ class TestMemoize(unittest.TestCase):
         """
         a test to test the memoize function
         """
+
         class TestClass:
             """
             a test to test the memoize function
@@ -84,8 +85,9 @@ class TestMemoize(unittest.TestCase):
 
         with patch.object(TestClass, "a_method") as mock_method:
             test_object = TestClass()
-            test_object.a_method()
-            self.assertEqual(mock_method.call_count, 1)
+            test_object.a_property()
+            test_object.a_property()
+            mock_method.assert_called_once()
 
 
 if __name__ == "__main__":
