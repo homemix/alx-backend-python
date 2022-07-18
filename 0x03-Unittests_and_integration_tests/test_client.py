@@ -4,7 +4,7 @@ a class to test the github_org_client.py file
 """
 import unittest
 from client import GithubOrgClient
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from parameterized import parameterized
 
 
@@ -37,16 +37,36 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(github_org_client._public_repos_url,
                              "https://api.github.com/orgs/google")
 
-    def test_public_repos(self):
+    @patch('client.get_json')
+    def test_public_repos(self, mock_org: MagicMock):
         """
         a method to test public_repos method
         """
-        with patch('client.GithubOrgClient.org') as mock_org:
-            mock_org.return_value = "https://api.github.com/orgs/google"
+        test_payload = {
+            "repos_url": "https://api.github.com/orgs/google/repos",
+            "repos": [
+                {
+                    "name": "google",
+                    "license": {
+                        "key": "mit"
+                    }
+                },
+                {
+                    "name": "abc",
+                    "license": {
+                        "key": "mit"
+                    }
+                }
+            ]
+        }
+        mock_org.return_value = test_payload["repos"]
+        with patch('client.GithubOrgClient._public_repos_url') as mock_org_repos:
+            mock_org_repos.return_value = test_payload["repos_url"]
             github_org_client = GithubOrgClient("google")
             self.assertEqual(github_org_client.public_repos(),
-                             ["google-python-client", "google-python-examples"])
-            mock_org.assert_called_once()
+                             ["google", "abc"])
+            mock_org_repos.assert_called_once()
+        mock_org.assert_called_once()
 
 
 if __name__ == '__main__':
