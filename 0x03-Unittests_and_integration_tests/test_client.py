@@ -109,13 +109,6 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher = patch("requests.get", side_effect=get_payload)
         cls.get_patcher.start()
 
-    @classmethod
-    def tearDownClass(cls) -> None:
-        """
-        a method to tear down class
-        """
-        cls.get_patcher.stop()
-
     def test_public_repos(self) -> None:
         """Tests the `public_repos` method."""
         self.assertEqual(
@@ -129,6 +122,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             GithubOrgClient("google").public_repos(license="apache-2.0"),
             self.apache2_repos,
         )
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """
+        a method to tear down class
+        """
+        cls.get_patcher.stop()
 
 
 if __name__ == '__main__':
