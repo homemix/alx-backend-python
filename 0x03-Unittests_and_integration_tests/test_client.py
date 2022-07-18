@@ -4,7 +4,7 @@ a class to test the github_org_client.py file
 """
 import unittest
 from client import GithubOrgClient
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, PropertyMock
 from parameterized import parameterized
 
 
@@ -60,7 +60,8 @@ class TestGithubOrgClient(unittest.TestCase):
             ]
         }
         mock_org.return_value = test_payload["repos"]
-        with patch('client.GithubOrgClient._public_repos_url'
+        with patch('client.GithubOrgClient._public_repos_url',
+                   new_callable=PropertyMock
                    ) as mock_org_repos:
             mock_org_repos.return_value = test_payload["repos_url"]
             github_org_client = GithubOrgClient("google")
