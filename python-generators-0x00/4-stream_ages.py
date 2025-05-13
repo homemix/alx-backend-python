@@ -20,7 +20,7 @@ def stream_user_ages(connection):
     A generator that yields user ages one by one from the database.
     """
     cursor = connection.cursor()
-    cursor.execute("SELECT age FROM user_data")
+    cursor.execute("SELECT age FROM user_data")  # Assuming your table has a column 'age'
 
     # Yield ages one by one
     for age in cursor.fetchall():
