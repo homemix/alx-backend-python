@@ -15,21 +15,24 @@ def connect_to_db():
         return None
 
 
-def stream_user_ages(connection):
+def stream_user_ages():
     """
     A generator that yields user ages one by one from the database.
     """
-    cursor = connection.cursor()
-    cursor.execute("SELECT age FROM user_data")  # Assuming your table has a column 'age'
+    connection = connect_to_db()
+    if connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT age FROM user_data")
 
-    # Yield ages one by one
-    for age in cursor.fetchall():
-        yield age[0]
+        # Yield ages one by one
+        for age in cursor.fetchall():
+            yield age[0]
 
-    cursor.close()
+        cursor.close()
+        connection.close()
 
 
-def calculate_average_age(connection):
+def calculate_average_age():
     """
     Calculates the average age of users using a generator.
     """
@@ -37,7 +40,7 @@ def calculate_average_age(connection):
     count = 0
 
     # Use the generator to stream user ages
-    for age in stream_user_ages(connection):
+    for age in stream_user_ages():
         total_age += age
         count += 1
 
@@ -46,4 +49,4 @@ def calculate_average_age(connection):
         average_age = total_age / count
         return average_age
     else:
-        return 0  # If there are no users
+        return 0
