@@ -1,4 +1,4 @@
-import mysql
+import mysql.connector
 
 
 def connect_to_db():
@@ -9,12 +9,14 @@ def connect_to_db():
         connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            passwd="<PASSWORD>",
+            password="<Password>",
             database="ALX_prodev",
         )
         return connection
     except mysql.connector.Error as err:
-        return f"Database error: {err}"
+        print(f"Database error: {err}")
+        return None
+
 
 
 def stream_users_in_batches(size):
@@ -22,16 +24,20 @@ def stream_users_in_batches(size):
     Get data in batches
     """
     connection = connect_to_db()
-    cursor = connection.cursor()
-    offset = 0
-    while offset < size:
-        cursor.execute("SELECT * FROM user_data LIMIT {size}")
-        rows = cursor.fetchall()
-        for row in rows:
-            yield row
-        offset += size
-    cursor.close()
-    connection.close()
+    if connection:
+
+        cursor = connection.cursor()
+        offset = 0
+        while offset < size:
+            cursor.execute("SELECT * FROM users LIMIT {size}")
+            rows = cursor.fetchall()
+            for row in rows:
+                yield row
+            offset += size
+        cursor.close()
+        connection.close()
+    else:
+        print("Connection closed/error")
 
 
 def batch_processing(batch_size):
