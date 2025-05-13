@@ -2,23 +2,32 @@ import mysql.connector
 
 
 def connect_to_db():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="<PASSWORD>",  # Replace with your MySQL root password
-        database="ALX_prodev"
-    )
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="<Password>",
+            database="ALX_prodev",
+        )
+        return connection
+    except mysql.connector.Error as err:
+        print(f"Database error: {err}")
+        return None
 
 
-def paginate_users(connection, page_size, offset):
+def paginate_users(page_size, offset):
+
     """
     Fetch a single page of users from the database.
     """
-    cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM user_data LIMIT %s OFFSET %s", (page_size, offset))
-    results = cursor.fetchall()
-    cursor.close()
-    return results
+    connection = connect_to_db()
+    if connection:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM user_data LIMIT %s OFFSET %s", (page_size, offset))
+        results = cursor.fetchall()
+        cursor.close()
+        return results
+    return None
 
 
 def lazy_paginate(page_size):
