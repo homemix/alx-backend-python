@@ -3,7 +3,7 @@ import sqlite3
 
 
 #### decorator to lof SQL queries
-
+""" YOUR CODE GOES HERE"""
 def log_queries(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
