@@ -1,15 +1,17 @@
-import sqlite3
 import functools
+import sqlite3
+
 
 #### decorator to lof SQL queries
 
 def log_queries(func):
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         print(f"args: {args}")
-        # print(f"kwargs: {kwargs}")
-        for k,v in kwargs.items():
+        for k, v in kwargs.items():
             print(f"{k}: {v}")
-        # return result
+        return func(*args, **kwargs)
+
     return wrapper
 
 
