@@ -12,6 +12,9 @@ def with_db_connection(func):
             # Pass the connection to the decorated function
             result = func(conn, *args, **kwargs)
             return result
+        except Exception as e:
+            print(f"Error In DB Connection: {e}")
+            return None
         finally:
             conn.close()
             print(" Database connection closed.")
