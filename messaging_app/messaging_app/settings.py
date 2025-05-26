@@ -133,3 +133,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+# settings.py
+
+AUTH_USER_MODEL = 'chats.User'
+
