@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from messaging_app.chats.views import ConversationViewSet, MessageViewSet
+from .views import ConversationViewSet, MessageViewSet
 
 router = DefaultRouter()
 router.register('conversations', ConversationViewSet)
