@@ -9,8 +9,10 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, blank=True)
 
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', 'phone_number']
     USERNAME_FIELD = 'username'
+
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone_number']
+
 
     def __str__(self):
         return f"{self.username} ({self.email})"

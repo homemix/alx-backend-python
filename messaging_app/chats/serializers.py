@@ -1,7 +1,9 @@
 from rest_framework import serializers
-# from rest_framework.serializers import CharField, SerializerMethodField, ValidationError
 
 from .models import Conversation, Message, User
+
+
+# from rest_framework.serializers import CharField, SerializerMethodField, ValidationError
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -11,14 +13,12 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['user_id', 'username', 'email', 'first_name', 'last_name', 'phone_number']
 
-    @staticmethod
     def validate_first_name(value):
         if len(value) < 2:
             raise serializers.ValidationError("First name must be at least 2 characters long.")
         return value
 
-    @staticmethod
-    def validate_phone_number(value):
+    def validate_phone_number(self, value):
         if value and not value.isdigit():
             raise serializers.ValidationError("Phone number must contain only digits.")
         return value
@@ -32,12 +32,10 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = ['message_id', 'message_body', 'sent_by', 'sent_at', 'message_preview']
 
-    @staticmethod
-    def get_message_preview(obj):
+    def get_message_preview(self, obj):
         return obj.message_body[:30]
 
-    @staticmethod
-    def validate_message_body(value):
+    def validate_message_body(self, value):
         if not value.strip():
             raise serializers.ValidationError("Message body cannot be empty or only whitespace.")
         return value
