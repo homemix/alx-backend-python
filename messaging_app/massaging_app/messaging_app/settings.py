@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'rest_framework_simplejwt',
-    'messaging_app.chats',
+    'chats',
 ]
 
 MIDDLEWARE = [
