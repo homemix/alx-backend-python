@@ -11,7 +11,7 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'username'
 
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone_number']
+    REQUIRED_FIELDS = [ 'first_name', 'last_name', 'phone_number']
 
 
     def __str__(self):
