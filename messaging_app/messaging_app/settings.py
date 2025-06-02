@@ -160,6 +160,6 @@ SIMPLE_JWT = {
 }
 
 
-AUTH_USER_MODEL = 'messaging_app.chats.User'
-# AUTH_USER_MODEL = 'chats.User'
+# AUTH_USER_MODEL = 'messaging_app.chats.User'
+AUTH_USER_MODEL = 'chats.User'
 
