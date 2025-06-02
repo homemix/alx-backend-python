@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from .models import Conversation, Message
+from .permissions import IsOwner
 from .serializers import ConversationSerializer, MessageSerializer
 
 
@@ -11,6 +12,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationSerializer
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['conversation_id']
+    permission_classes = [IsOwner]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -25,6 +27,7 @@ class MessageViewSet(ViewSet):
     serializer_class = MessageSerializer
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['sent_at']
+    permission_classes = [IsOwner]
 
     def create(self, request, *args, **kwargs):
         serializer = MessageSerializer(data=request.data)
