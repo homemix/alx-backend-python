@@ -10,6 +10,13 @@ from messaging.serializers import MessageSerializer
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+def unread_messages(request):
+    messages = Message.unread.for_user(request.user)
+    serializer = MessageSerializer(messages, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_conversation_api(request):
     receiver_id = request.GET.get('receiver')
     if not receiver_id:
