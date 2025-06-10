@@ -6,6 +6,26 @@ from datetime import datetime, time
 from django.http import HttpResponseForbidden, JsonResponse
 
 
+class RolePermissionMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        # Only check role for authenticated users
+        user = getattr(request, 'user', None)
+        if user and user.is_authenticated:
+            # Replace with actual check for role if you're using a custom user model or role field
+            role = getattr(user, 'role', None)
+
+            if role not in ['admin', 'moderator']:
+                return JsonResponse(
+                    {"error": "Access forbidden: Admins or moderators only."},
+                    status=403
+                )
+
+        return self.get_response(request)
+
+
 class OffensiveLanguageMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
