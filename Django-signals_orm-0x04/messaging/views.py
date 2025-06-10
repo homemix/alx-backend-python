@@ -1,5 +1,4 @@
-# messaging/views.py
-
+from django.views.decorators.cache import cache_page
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -15,6 +14,8 @@ def unread_messages(request):
     serializer = MessageSerializer(messages, many=True)
     return Response(serializer.data)
 
+
+@cache_page(60)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_conversation_api(request):
