@@ -11,7 +11,7 @@ from messaging.serializers import MessageSerializer
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def unread_messages(request):
-    messages = Message.unread.for_user(request.user)
+    messages = Message.unread.unread_for_user(request.user).only('id', 'sender', 'content', 'timestamp')
     serializer = MessageSerializer(messages, many=True)
     return Response(serializer.data)
 

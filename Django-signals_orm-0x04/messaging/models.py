@@ -5,8 +5,8 @@ User = get_user_model()
 
 
 class UnreadMessagesManager(models.Manager):
-    def for_user(self, user):
-        return self.get_queryset().filter(receiver=user, read=False).only('id', 'sender', 'content', 'timestamp')
+    def unread_for_user(self, user):
+        return self.get_queryset().filter(receiver=user, read=False)
 
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
