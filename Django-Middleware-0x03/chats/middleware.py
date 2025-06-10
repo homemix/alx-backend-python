@@ -6,8 +6,6 @@ from datetime import datetime, time
 from django.http import HttpResponseForbidden, JsonResponse
 
 
-# chats/middleware.py
-
 class OffensiveLanguageMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
