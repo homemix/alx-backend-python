@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    tools {
+        python 'Python 3'
+    }
+
+    stages {
+        stage('Clone repository') {
+            steps {
+                git 'https://github.com/homemix/alx-backend-python.git'
+            }
+        }
+
+        stage('Set up environment') {
+            steps {
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r messaging_app/requirements.txt
+                '''
+            }
+        }
+
+        stage('Run tests') {
+            steps {
+                sh '''
+                    . venv/bin/activate
+                    pytest messaging_app/tests --junitxml=report.xml
+                '''
+            }
+        }
+
+        stage('Publish test report') {
+            post {
+                always {
+                    junit 'report.xml'
+                }
+            }
+        }
+    }
+
+    triggers {
+        // No automatic triggers; pipeline is manual
+    }
+}
