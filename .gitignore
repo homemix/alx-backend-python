@@ -1,5 +1,5 @@
 .idea
-.*
+.gitignore
 .venv
 *.db
 python-decorators-0x01/users.db
